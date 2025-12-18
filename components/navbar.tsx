@@ -60,11 +60,11 @@ export default function Navbar({
             <div className="flex items-center space-x-4 min-w-0">
               <Link
                 href="/dashboard"
-                className="flex items-center space-x-1 sm:space-x-2 text-purple-700 hover:text-gray-900 shrink-0"
+                className="flex items-center space-x-2 text-purple-700 hover:text-gray-900 shrink-0"
               >
                 <Button
                   size="sm"
-                  className="text-xs sm:text-sm bg-purple-500 hover:bg-purple-600"
+                  className="text-sm bg-purple-500 hover:bg-purple-600"
                 >
                   <ArrowLeft />
                   <span className="hidden sm:inline">Back to Dashboard</span>
@@ -74,7 +74,7 @@ export default function Navbar({
               <div className="h-6 w-px bg-gray-300" />
               <div className="flex items-center space-x-2 min-w-0">
                 <Logo className="h-6 w-6 text-purple-500" />
-                <div className="items-center space-x-1 sm:space-x-2 min-w-0">
+                <div className="items-center space-x-1 min-w-0">
                   <span className="text-lg font-bold text-gray-900 truncate">
                     {boardTitle}
                   </span>
@@ -97,7 +97,7 @@ export default function Navbar({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className={`text-xs sm:text-sm border-2 border-purple-500 text-purple-500 hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600 ${
+                  className={`text-sm border-2 border-purple-500 text-purple-500 hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600 ${
                     filterCount > 0 ? "bg-purple-100" : ""
                   }`}
                   onClick={onFilterClick}
@@ -107,7 +107,7 @@ export default function Navbar({
                   {filterCount > 0 && (
                     <Badge
                       variant="secondary"
-                      className="text-xs ml-1 sm:ml-2 bg-purple-50 border-purple-500"
+                      className="text-xs ml-1 bg-purple-50 border-purple-500"
                     >
                       {filterCount}
                     </Badge>
