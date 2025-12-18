@@ -24,7 +24,6 @@ export interface Task {
   column_id: string;
   title: string;
   description: string | null;
-  assignee: string | null;
   due_date: string | null;
   priority: "low" | "medium" | "high";
   sort_order: number;

@@ -23,7 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useBoard } from "@/lib/hooks/useBoards";
 import { ColumnWithTasks, Task } from "@/lib/supabase/models";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { Calendar, MoreHorizontal, Plus, User } from "lucide-react";
+import { Calendar, MoreHorizontal, Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
@@ -131,15 +131,6 @@ function DroppableColumn({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Assignee</Label>
-                  <Input
-                    id="assignee"
-                    name="assignee"
-                    placeholder="Who should do this?"
-                  />
-                </div>
-
-                <div className="space-y-2">
                   <Label>Priority</Label>
                   <Select name="priority" defaultValue="medium">
                     <SelectTrigger>
@@ -221,12 +212,6 @@ function SortableTask({ task }: { task: Task }) {
             {/* Task Meta */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
-                {task.assignee && (
-                  <div className="flex items-center space-x-1 text-xs text-gray-500">
-                    <User className="h-3 w-3" />
-                    <span className="truncate">{task.assignee}</span>
-                  </div>
-                )}
                 {task.due_date && (
                   <div className="flex items-center space-x-1 text-xs text-gray-500">
                     <Calendar className="h-3 w-3" />
@@ -279,12 +264,6 @@ function TaskOverlay({ task }: { task: Task }) {
           {/* Task Meta */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
-              {task.assignee && (
-                <div className="flex items-center space-x-1 text-xs text-gray-500">
-                  <User className="h-3 w-3" />
-                  <span className="truncate">{task.assignee}</span>
-                </div>
-              )}
               {task.due_date && (
                 <div className="flex items-center space-x-1 text-xs text-gray-500">
                   <Calendar className="h-3 w-3" />
@@ -333,7 +312,6 @@ export default function BoardPage() {
 
   const [filters, setFilters] = useState({
     priority: [] as string[],
-    assignee: [] as string[],
     dueDate: null as string | null,
   });
 
@@ -348,7 +326,7 @@ export default function BoardPage() {
   );
 
   function handleFilterChange(
-    type: "priority" | "assignee" | "dueDate",
+    type: "priority" | "dueDate",
     value: string | string[] | null
   ) {
     setFilters((prev) => ({
@@ -360,7 +338,6 @@ export default function BoardPage() {
   function clearFilters() {
     setFilters({
       priority: [] as string[],
-      assignee: [] as string[],
       dueDate: null as string | null,
     });
   }
@@ -382,7 +359,6 @@ export default function BoardPage() {
   async function createTask(taskData: {
     title: string;
     description?: string;
-    assignee?: string;
     dueDate?: string;
     priority: "low" | "medium" | "high";
   }) {
@@ -400,7 +376,6 @@ export default function BoardPage() {
     const taskData = {
       title: formData.get("title") as string,
       description: (formData.get("description") as string) || undefined,
-      assignee: (formData.get("assignee") as string) || undefined,
       dueDate: (formData.get("dueDate") as string) || undefined,
       priority:
         (formData.get("priority") as "low" | "medium" | "high") || "medium",
@@ -567,7 +542,7 @@ export default function BoardPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-fixed bg-radial from-white to-purple-100">
         <Navbar
           boardTitle={board?.title}
           onEditBoard={() => {
@@ -650,7 +625,7 @@ export default function BoardPage() {
             <DialogHeader>
               <DialogTitle>Filter Tasks</DialogTitle>
               <p className="text-sm text-gray-600">
-                Filter tasks by priority, assignee, or due date
+                Filter tasks by priority or due date
               </p>
             </DialogHeader>
             <div className="space-y-4">
@@ -681,8 +656,6 @@ export default function BoardPage() {
                   ))}
                 </div>
               </div>
-
-              {/* Assignee Filter required here */}
 
               <div className="space-y-2">
                 <Label>Due Date</Label>
@@ -756,15 +729,6 @@ export default function BoardPage() {
                       rows={3}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label>Assignee</Label>
-                    <Input
-                      id="assignee"
-                      name="assignee"
-                      placeholder="Who should do this?"
-                    />
-                  </div>
-
                   <div className="space-y-2">
                     <Label>Priority</Label>
                     <Select name="priority" defaultValue="medium">
@@ -849,6 +813,7 @@ export default function BoardPage() {
         </main>
       </div>
 
+      {/* Add column button */}
       <Dialog open={isCreatingColumn} onOpenChange={setIsCreatingColumn}>
         <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
           <DialogHeader>
@@ -882,6 +847,7 @@ export default function BoardPage() {
         </DialogContent>
       </Dialog>
 
+      {/* Column edit button */}
       <Dialog open={isEditingColumn} onOpenChange={setIsEditingColumn}>
         <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
           <DialogHeader>

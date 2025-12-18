@@ -205,7 +205,7 @@ export default function DashboardPage() {
             <Input
               id="search"
               placeholder="Search boards..."
-              className="pl-10 border border-purple-300 bg-white font-semibold text-purple-500 placeholder:text-purple-500 placeholder:font-normal focus-visible:ring-purple-200 focus-visible:border-purple-300"
+              className="pl-10 border border-purple-300 bg-white text-purple-500 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
               onChange={(e) =>
                 setFilters((prev) => ({ ...prev, search: e.target.value }))
               }
@@ -244,7 +244,7 @@ export default function DashboardPage() {
                           : "No description"}
                       </CardDescription>
                       <div className="flex flex-row items-center justify-between text-sm text-gray-600">
-                        <span>12 Tasks</span>
+                        <span>Total Tasks: </span>
                         <span>
                           Updated at:{" "}
                           {new Date(board.updated_at).toLocaleDateString()}
@@ -270,31 +270,38 @@ export default function DashboardPage() {
 
       {/* Filter Dialog */}
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
+        <DialogContent
+          className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:text-purple-600
+[&>button:hover]:text-purple-700
+[&>button:hover]:bg-purple-100
+[&>button]:rounded-md"
+        >
           <DialogHeader>
-            <DialogTitle>Filter Boards</DialogTitle>
-            <p className="text-sm text-gray-600">
+            <DialogTitle className="text-purple-700">Filter Boards</DialogTitle>
+            <p className="text-sm text-purple-600">
               Filter boards by title, date, or task count.
             </p>
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Search</Label>
+              <Label className="text-purple-700">Search</Label>
               <Input
                 id="search"
                 placeholder="Search board titles..."
+                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   setFilters((prev) => ({ ...prev, search: e.target.value }))
                 }
               />
             </div>
             <div className="space-y-2">
-              <Label>Date Range</Label>
+              <Label className="text-purple-700">Date Range</Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div>
-                  <Label className="text-xs">Start Date</Label>
+                <div className="space-y-1">
+                  <Label className="text-xs text-purple-700">Start Date</Label>
                   <Input
                     type="date"
+                    className="border-purple-300 bg-white text-purple-600 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -306,10 +313,11 @@ export default function DashboardPage() {
                     }
                   />
                 </div>
-                <div>
-                  <Label className="text-xs">End Date</Label>
+                <div className="space-y-1">
+                  <Label className="text-xs text-purple-700">End Date</Label>
                   <Input
                     type="date"
+                    className="border-purple-300 bg-white text-purple-600 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -324,14 +332,15 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label>Task Count</Label>
+              <Label className="text-purple-700">Task Count</Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div>
-                  <Label className="text-xs">Minimum</Label>
+                <div className="space-y-1">
+                  <Label className="text-xs text-purple-700">Minimum</Label>
                   <Input
                     type="number"
                     min="0"
                     placeholder="Min tasks"
+                    className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -343,12 +352,13 @@ export default function DashboardPage() {
                     }
                   />
                 </div>
-                <div>
-                  <Label className="text-xs">Maximum</Label>
+                <div className="space-y-1">
+                  <Label className="text-xs text-purple-700">Maximum</Label>
                   <Input
                     type="number"
                     min="0"
                     placeholder="Max tasks"
+                    className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -363,11 +373,18 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between pt-4 space-y-2 sm:space-y-0 sm:space-x-2">
-              <Button variant="outline" onClick={clearFilters}>
+            <div className="flex flex-col sm:flex-row justify-between pt-4 gap-2">
+              <Button
+                variant="ghost"
+                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
+                onClick={clearFilters}
+              >
                 Clear Filters
               </Button>
-              <Button onClick={() => setIsFilterOpen(false)}>
+              <Button
+                className="bg-purple-500 hover:bg-purple-600"
+                onClick={() => setIsFilterOpen(false)}
+              >
                 Apply Filters
               </Button>
             </div>
