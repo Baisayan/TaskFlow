@@ -62,7 +62,7 @@ function DroppableColumn({
   return (
     <div
       ref={setNodeRef}
-      className={`w-full lg:shrink-0 lg:w-80 ${
+      className={`w-full md:max-w-xl lg:mx-0 lg:shrink-0 lg:w-80 ${
         isOver ? "bg-purple-100 rounded-lg" : ""
       }`}
     >
@@ -199,12 +199,12 @@ function SortableTask({ task }: { task: Task }) {
 
   return (
     <div ref={setNodeRef} style={styles} {...listeners} {...attributes}>
-      <Card className="cursor-pointer hover:shadow-md  transition-shadow">
-        <CardContent className="p-3 sm:p-4">
-          <div className="space-y-2 sm:space-y-3">
+      <Card className="cursor-pointer border-purple-300 hover:shadow-lg hover:shadow-purple-200  transition-shadow">
+        <CardContent className="p-4">
+          <div className="space-y-2">
             {/* Task Header */}
             <div className="flex items-start justify-between">
-              <h4 className="font-medium text-gray-900 text-sm leading-tight flex-1 min-w-0 pr-2">
+              <h4 className="font-medium text-purple-600 text-sm leading-tight flex-1 min-w-0 pr-2">
                 {task.title}
               </h4>
             </div>
@@ -225,7 +225,7 @@ function SortableTask({ task }: { task: Task }) {
                 )}
               </div>
               <div
-                className={`w-2 h-2 rounded-full shrink-0 ${getPriorityColor(
+                className={`w-3 h-3 mr-2 rounded-full shrink-0 ${getPriorityColor(
                   task.priority
                 )}`}
               />
@@ -325,7 +325,7 @@ export default function BoardPage() {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8,
+        distance: 12,
       },
     })
   );
@@ -691,74 +691,6 @@ export default function BoardPage() {
 
         {/* Board Content */}
         <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
-          {/* Stats */}
-          <div className="flex flex-col justify-between mb-6 space-y-4 sm:space-y-0">
-            <div className="flex items-center justify-between gap-6">
-              <div className="text-md text-purple-600">
-                <span className="font-medium">Total Tasks: </span>
-                {columns.reduce((sum, col) => sum + col.tasks.length, 0)}
-              </div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button size="sm" className="w-auto bg-purple-500 hover:bg-purple-600">
-                    <Plus />
-                    Add Task
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
-                  <DialogHeader>
-                    <DialogTitle>Create New Task</DialogTitle>
-                    <p className="text-sm text-gray-600">
-                      Add a task to the board
-                    </p>
-                  </DialogHeader>
-                  <form className="space-y-4" onSubmit={handleCreateTask}>
-                    <div className="space-y-2">
-                      <Label>Title *</Label>
-                      <Input
-                        id="title"
-                        name="title"
-                        placeholder="Enter task title"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Description</Label>
-                      <Textarea
-                        id="description"
-                        name="description"
-                        placeholder="Enter task description"
-                        rows={3}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Priority</Label>
-                      <Select name="priority" defaultValue="medium">
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {["low", "medium", "high"].map((priority, key) => (
-                            <SelectItem key={key} value={priority}>
-                              {priority.charAt(0).toUpperCase() +
-                                priority.slice(1)}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Due Date</Label>
-                      <Input type="date" id="dueDate" name="dueDate" />
-                    </div>
-                    <div className="flex justify-end space-x-2 pt-4">
-                      <Button type="submit">Create Task</Button>
-                    </div>
-                  </form>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
-
           {/* Board Columns */}
           <DndContext
             sensors={sensors}
@@ -768,11 +700,9 @@ export default function BoardPage() {
             onDragEnd={handleDragEnd}
           >
             <div
-              className="flex flex-col lg:flex-row lg:space-x-6 lg:overflow-x-auto 
-            lg:pb-6 lg:px-2 lg:-mx-2 lg:[&::-webkit-scrollbar]:h-2 
-            lg:[&::-webkit-scrollbar-track]:bg-gray-100 
-            lg:[&::-webkit-scrollbar-thumb]:bg-gray-300 lg:[&::-webkit-scrollbar-thumb]:rounded-full 
-            space-y-4 lg:space-y-0"
+              className="flex flex-col gap-4 md:gap-6 md:items-center lg:items-start lg:flex-row lg:gap-6 lg:overflow-x-auto lg:pb-6 lg:px-2 lg:-mx-2 
+              lg:[&::-webkit-scrollbar]:h-2 lg:[&::-webkit-scrollbar-track]:bg-white lg:[&::-webkit-scrollbar-track]:rounded-full
+            lg:[&::-webkit-scrollbar-thumb]:bg-purple-300 lg:[&::-webkit-scrollbar-thumb]:rounded-full"
             >
               {filteredColumns.map((column, key) => (
                 <DroppableColumn
@@ -794,14 +724,14 @@ export default function BoardPage() {
                 </DroppableColumn>
               ))}
 
-              <div className="w-full lg:shrink-0 lg:w-80">
+              <div className="w-full md:max-w-xl md:mx-auto lg:shrink-0 lg:w-80">
                 <Button
                   variant="outline"
-                  className="w-full h-full min-h-[200px] border-dashed border-2 text-gray-500 hover:text-gray-700"
+                  className="w-full h-fit py-6 shadow-lg shadow-purple-200 transition-colors text-white hover:text-white bg-purple-300 hover:bg-purple-400"
                   onClick={() => setIsCreatingColumn(true)}
                 >
                   <Plus />
-                  Add another list
+                  Add another List
                 </Button>
               </div>
 
