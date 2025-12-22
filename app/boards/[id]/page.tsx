@@ -192,15 +192,15 @@ function SortableTask({ task }: { task: Task }) {
       case "low":
         return "bg-green-500";
       default:
-        return "bg-yellow-500";
+        return "bg-green-500";
     }
   }
 
   return (
     <div ref={setNodeRef} style={styles} {...listeners} {...attributes}>
-      <Card className="cursor-pointer border-purple-300 hover:shadow-lg hover:shadow-purple-200  transition-shadow">
+      <Card className="cursor-pointer border-purple-300 hover:shadow-lg hover:shadow-purple-200 transition-shadow">
         <CardContent className="p-4">
-          <div className="space-y-2">
+          <div className="space-y-3">
             {/* Task Header */}
             <div className="flex items-start justify-between">
               <h4 className="font-medium text-purple-600 text-sm leading-tight flex-1 min-w-0 pr-2">
@@ -209,7 +209,7 @@ function SortableTask({ task }: { task: Task }) {
             </div>
 
             {/* Task Description */}
-            <p className="text-xs text-gray-600 line-clamp-2">
+            <p className="text-xs text-gray-600">
               {task.description || "No description."}
             </p>
 
@@ -246,22 +246,22 @@ function TaskOverlay({ task }: { task: Task }) {
       case "low":
         return "bg-green-500";
       default:
-        return "bg-yellow-500";
+        return "bg-green-500";
     }
   }
   return (
-    <Card className="cursor-pointer hover:shadow-md transition-shadow">
-      <CardContent className="p-3 sm:p-4">
-        <div className="space-y-2 sm:space-y-3">
+    <Card className="cursor-pointer border-purple-300 hover:shadow-lg hover:shadow-purple-200 transition-shadow">
+      <CardContent className="p-4">
+        <div className="space-y-3">
           {/* Task Header */}
           <div className="flex items-start justify-between">
-            <h4 className="font-medium text-gray-900 text-sm leading-tight flex-1 min-w-0 pr-2">
+            <h4 className="font-medium text-purple-600 text-sm leading-tight flex-1 min-w-0 pr-2">
               {task.title}
             </h4>
           </div>
 
           {/* Task Description */}
-          <p className="text-xs text-gray-600 line-clamp-2">
+          <p className="text-xs text-gray-600">
             {task.description || "No description."}
           </p>
 
@@ -276,7 +276,7 @@ function TaskOverlay({ task }: { task: Task }) {
               )}
             </div>
             <div
-              className={`w-2 h-2 rounded-full shrink-0 ${getPriorityColor(
+              className={`w-3 h-3 mr-2 rounded-full shrink-0 ${getPriorityColor(
                 task.priority
               )}`}
             />
@@ -382,7 +382,7 @@ export default function BoardPage() {
       description: (formData.get("description") as string) || undefined,
       dueDate: (formData.get("dueDate") as string) || undefined,
       priority:
-        (formData.get("priority") as "low" | "medium" | "high") || "medium",
+        (formData.get("priority") as "low" | "medium" | "high") || "low",
     };
 
     if (taskData.title.trim()) {
@@ -565,7 +565,7 @@ export default function BoardPage() {
         <Dialog open={isEditingTitle} onOpenChange={setIsEditingTitle}>
           <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
             <DialogHeader>
-              <DialogTitle>Edit Board</DialogTitle>
+              <DialogTitle className="text-purple-600">Edit Board</DialogTitle>
             </DialogHeader>
             <form className="space-y-4" onSubmit={handleUpdateBoard}>
               <div className="space-y-2">
@@ -581,7 +581,7 @@ export default function BoardPage() {
 
               <div className="space-y-2">
                 <Label>Board Color</Label>
-                <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                   {[
                     "bg-blue-500",
                     "bg-green-500",
@@ -589,12 +589,8 @@ export default function BoardPage() {
                     "bg-red-500",
                     "bg-purple-500",
                     "bg-pink-500",
-                    "bg-indigo-500",
-                    "bg-gray-500",
                     "bg-orange-500",
-                    "bg-teal-500",
                     "bg-cyan-500",
-                    "bg-emerald-500",
                   ].map((color, key) => (
                     <button
                       key={key}

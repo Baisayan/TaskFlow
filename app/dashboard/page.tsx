@@ -59,11 +59,19 @@ export default function DashboardPage() {
       .toLowerCase()
       .includes(filters.search.toLowerCase());
 
+    const boardDate = new Date(board.updated_at).toDateString();
+
+    const startDate = filters.dateRange.start
+      ? new Date(filters.dateRange.start).toDateString()
+      : null;
+
+    const endDate = filters.dateRange.end
+      ? new Date(filters.dateRange.end).toDateString()
+      : null;
+
     const matchesDateRange =
-      (!filters.dateRange.start ||
-        new Date(board.created_at) >= new Date(filters.dateRange.start)) &&
-      (!filters.dateRange.end ||
-        new Date(board.created_at) <= new Date(filters.dateRange.end));
+      (!startDate || new Date(boardDate) >= new Date(startDate)) &&
+      (!endDate || new Date(boardDate) <= new Date(endDate));
 
     return matchesSearch && matchesDateRange;
   });
@@ -131,6 +139,7 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+
           <div className="border-purple-300 bg-white/60 border rounded-2xl hover:shadow-lg hover:shadow-purple-100 hover:border-purple-400 transition-colors">
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
@@ -148,6 +157,7 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+
           <div className="border-purple-300 bg-white/60 border rounded-2xl hover:shadow-lg hover:shadow-purple-100 hover:border-purple-400 transition-colors">
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
@@ -219,8 +229,8 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-fr">
               {filteredBoards.map((board, key) => (
                 <Link href={`/boards/${board.id}`} key={key}>
-                  <Card className="h-full hover:shadow-lg hover:shadow-purple-200 transition-shadow cursor-pointer group border border-purple-300 hover:border-purple-400">
-                    <CardHeader className="">
+                  <Card className="h-full hover:shadow-lg hover:shadow-purple-200 transition-shadow cursor-pointer group border-purple-300 hover:border-purple-400">
+                    <CardHeader>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <div className={`w-4 h-4 ${board.color} rounded`} />
@@ -244,10 +254,8 @@ export default function DashboardPage() {
                           : "No description"}
                       </CardDescription>
                       <div className="flex text-sm text-gray-600">
-                        <span>
-                          Updated at:{" "}
-                          {new Date(board.updated_at).toLocaleDateString()}
-                        </span>
+                        Updated{" "}
+                        {new Date(board.updated_at).toLocaleDateString()}
                       </div>
                     </CardContent>
                   </Card>
@@ -278,7 +286,7 @@ export default function DashboardPage() {
           <DialogHeader>
             <DialogTitle className="text-purple-700">Filter Boards</DialogTitle>
             <p className="text-sm text-purple-600">
-              Filter boards by title, date, or task count.
+              Filter boards by title, last updated date, or task count.
             </p>
           </DialogHeader>
           <div className="space-y-4">
