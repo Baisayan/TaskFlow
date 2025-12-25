@@ -23,10 +23,7 @@ import { useUser } from "@clerk/nextjs";
 import {
   Filter,
   Plus,
-  CheckCircle,
   Search,
-  ListChecks,
-  Clock,
   MoreVertical,
 } from "lucide-react";
 import Link from "next/link";
@@ -43,18 +40,9 @@ export default function DashboardPage() {
       start: null as string | null,
       end: null as string | null,
     },
-    taskCount: {
-      min: null as number | null,
-      max: null as number | null,
-    },
   });
 
-  const boardsWithTaskCount = boards.map((board: Board) => ({
-    ...board,
-    taskCount: 0, // This would need to be calculated from actual data
-  }));
-
-  const filteredBoards = boardsWithTaskCount.filter((board: Board) => {
+  const filteredBoards = boards.filter((board: Board) => {
     const matchesSearch = board.title
       .toLowerCase()
       .includes(filters.search.toLowerCase());
@@ -83,10 +71,6 @@ export default function DashboardPage() {
         start: null as string | null,
         end: null as string | null,
       },
-      taskCount: {
-        min: null as number | null,
-        max: null as number | null,
-      },
     });
   }
 
@@ -108,81 +92,15 @@ export default function DashboardPage() {
       <Navbar />
 
       <main className="container mx-auto px-4 py-6 sm:py-8">
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Your workspace awaits,{" "}
-            <span className="text-purple-500">
-              {user?.firstName ?? user?.emailAddresses[0].emailAddress}!
-            </span>
-          </h1>
-          <p className="text-purple-600 px-1">
-            Review your boards, track progress, and plan your next steps.
-          </p>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
-          <div className="border-purple-300 bg-white/60 border rounded-2xl hover:shadow-lg hover:shadow-purple-100 hover:border-purple-400 transition-colors">
-            <div className="p-4 sm:p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs sm:text-sm font-medium text-gray-600">
-                    Total Tasks
-                  </p>
-                  <p className="text-xl sm:text-2xl font-bold text-gray-900">
-                    {boards.length}
-                  </p>
-                </div>
-                <div className="h-10 w-10 sm:h-12 sm:w-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <ListChecks className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-purple-300 bg-white/60 border rounded-2xl hover:shadow-lg hover:shadow-purple-100 hover:border-purple-400 transition-colors">
-            <div className="p-4 sm:p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs sm:text-sm font-medium text-gray-600">
-                    Tasks Completed
-                  </p>
-                  <p className="text-xl sm:text-2xl font-bold text-gray-900">
-                    {boards.length}
-                  </p>
-                </div>
-                <div className="h-10 w-10 sm:h-12 sm:w-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-purple-300 bg-white/60 border rounded-2xl hover:shadow-lg hover:shadow-purple-100 hover:border-purple-400 transition-colors">
-            <div className="p-4 sm:p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs sm:text-sm font-medium text-gray-600">
-                    Tasks Due Soon
-                  </p>
-                  <p className="text-xl sm:text-2xl font-bold text-gray-900">
-                    {boards.length}
-                  </p>
-                </div>
-                <div className="h-10 w-10 sm:h-12 sm:w-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Boards */}
         <div className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                Your <span className="text-purple-500">Boards</span>
+                Your workspace awaits,{" "}
+                <span className="text-purple-500">
+                  {user?.firstName ?? user?.emailAddresses[0].emailAddress}!
+                </span>
               </h2>
               <p className="text-purple-600 px-1">
                 Manage your projects and tasks in one place.
@@ -210,6 +128,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
+          {/* Search box */}
           <div className="relative mb-4 sm:mb-6">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-purple-500" />
             <Input
@@ -278,10 +197,7 @@ export default function DashboardPage() {
       {/* Filter Dialog */}
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
         <DialogContent
-          className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:text-purple-600
-[&>button:hover]:text-purple-700
-[&>button:hover]:bg-purple-100
-[&>button]:rounded-md"
+          className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:text-purple-600 [&>button:hover]:text-purple-700 [&>button:hover]:bg-purple-100 [&>button]:rounded-md"
         >
           <DialogHeader>
             <DialogTitle className="text-purple-700">Filter Boards</DialogTitle>
@@ -290,6 +206,7 @@ export default function DashboardPage() {
             </p>
           </DialogHeader>
           <div className="space-y-4">
+            {/* Search by title */}
             <div className="space-y-2">
               <Label className="text-purple-700">Search</Label>
               <Input
@@ -301,6 +218,8 @@ export default function DashboardPage() {
                 }
               />
             </div>
+
+            {/* Search by date */}
             <div className="space-y-2">
               <Label className="text-purple-700">Date Range</Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -338,48 +257,8 @@ export default function DashboardPage() {
                 </div>
               </div>
             </div>
-            <div className="space-y-2">
-              <Label className="text-purple-700">Task Count</Label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div className="space-y-1">
-                  <Label className="text-xs text-purple-700">Minimum</Label>
-                  <Input
-                    type="number"
-                    min="0"
-                    placeholder="Min tasks"
-                    className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
-                    onChange={(e) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        taskCount: {
-                          ...prev.taskCount,
-                          min: e.target.value ? Number(e.target.value) : null,
-                        },
-                      }))
-                    }
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs text-purple-700">Maximum</Label>
-                  <Input
-                    type="number"
-                    min="0"
-                    placeholder="Max tasks"
-                    className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
-                    onChange={(e) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        taskCount: {
-                          ...prev.taskCount,
-                          max: e.target.value ? Number(e.target.value) : null,
-                        },
-                      }))
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-
+            
+            {/* Buttons apply n clear */}
             <div className="flex flex-col sm:flex-row justify-between pt-4 gap-2">
               <Button
                 variant="ghost"

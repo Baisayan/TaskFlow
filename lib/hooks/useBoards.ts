@@ -8,9 +8,8 @@ import {
   taskService,
 } from "../services";
 import { useEffect, useState } from "react";
-import { Board, Column, ColumnWithTasks, Task } from "../supabase/models";
+import { Board, ColumnWithTasks, Task } from "../supabase/models";
 import { useSupabase } from "../supabase/SupabaseProvider";
-
 
 // Fetches all boards for user and used in dashboard page
 export function useBoards() {
@@ -21,25 +20,25 @@ export function useBoards() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    async function loadBoards() {
+      if (!user) return;
+
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await boardService.getBoards(supabase!, user.id);
+        setBoards(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load boards.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     if (user) {
       loadBoards();
     }
   }, [user, supabase]);
-
-  async function loadBoards() {
-    if (!user) return;
-
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await boardService.getBoards(supabase!, user.id);
-      setBoards(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load boards.");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   async function createBoard(boardData: {
     title: string;
@@ -67,7 +66,7 @@ export function useBoards() {
 
 
 // Fetches single board and deals with columns, tasks and internal stuffs used in boards page
-export function useBoard(boardId: string) {
+export function useBoard(boardId: string) { 
   const { supabase } = useSupabase();
   const { user } = useUser();
 
@@ -77,29 +76,29 @@ export function useBoard(boardId: string) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    async function loadBoard() {
+      if (!boardId) return;
+
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await boardDataService.getBoardWithColumns(
+          supabase!,
+          boardId
+        );
+        setBoard(data.board);
+        setColumns(data.columnsWithTasks);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load boards.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     if (boardId) {
       loadBoard();
     }
   }, [boardId, supabase]);
-
-  async function loadBoard() {
-    if (!boardId) return;
-
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await boardDataService.getBoardWithColumns(
-        supabase!,
-        boardId
-      );
-      setBoard(data.board);
-      setColumns(data.columnsWithTasks);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load boards.");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   async function updateBoard(boardId: string, updates: Partial<Board>) {
     try {
