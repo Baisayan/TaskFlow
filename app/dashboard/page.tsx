@@ -265,7 +265,7 @@ export default function DashboardPage() {
       </main>
 
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:text-purple-600 [&>button:hover]:text-purple-700 [&>button:hover]:bg-purple-100 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
           <DialogHeader>
             <DialogTitle className="text-purple-700">Edit board</DialogTitle>
             <p className="text-sm text-purple-600">
@@ -273,7 +273,13 @@ export default function DashboardPage() {
             </p>
           </DialogHeader>
 
-          <div className="space-y-4">
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleUpdateBoard();
+            }}
+          >
             <div className="space-y-2">
               <Label className="text-purple-700">Title</Label>
               <Input
@@ -326,32 +332,37 @@ export default function DashboardPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between pt-4 gap-2">
-              <Button variant="destructive" onClick={handleDeleteBoard}>
+              <Button
+                variant="destructive"
+                type="button"
+                onClick={handleDeleteBoard}
+              >
                 Delete board
               </Button>
 
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   variant="ghost"
+                  type="button"
                   onClick={() => setIsEditOpen(false)}
                   className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
                 >
                   Cancel
                 </Button>
                 <Button
-                  onClick={handleUpdateBoard}
+                  type="submit"
                   className="bg-purple-500 hover:bg-purple-600"
                 >
                   Save Changes
                 </Button>
               </div>
             </div>
-          </div>
+          </form>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:text-purple-600 [&>button:hover]:text-purple-700 [&>button:hover]:bg-purple-100 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
           <DialogHeader>
             <DialogTitle className="text-purple-700">Filter Boards</DialogTitle>
             <p className="text-sm text-purple-600">
@@ -359,11 +370,16 @@ export default function DashboardPage() {
             </p>
           </DialogHeader>
 
-          <div className="space-y-4">
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setIsFilterOpen(false);
+            }}
+          >
             <div className="space-y-2">
               <Label className="text-purple-700">Search</Label>
               <Input
-                id="search"
                 placeholder="Search board titles..."
                 className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
@@ -393,6 +409,7 @@ export default function DashboardPage() {
                     }
                   />
                 </div>
+
                 <div className="space-y-1">
                   <Label className="text-xs text-purple-700 pl-1">
                     End Date
@@ -414,9 +431,9 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Buttons apply n clear */}
             <div className="flex flex-col sm:flex-row justify-between pt-4 gap-2">
               <Button
+                type="button"
                 variant="ghost"
                 className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
                 onClick={clearFilters}
@@ -424,18 +441,18 @@ export default function DashboardPage() {
                 Clear Filters
               </Button>
               <Button
+                type="submit"
                 className="bg-purple-500 hover:bg-purple-600"
-                onClick={() => setIsFilterOpen(false)}
               >
                 Apply Filters
               </Button>
             </div>
-          </div>
+          </form>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:text-purple-600 [&>button:hover]:text-purple-700 [&>button:hover]:bg-purple-100 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
           <DialogHeader>
             <DialogTitle className="text-purple-700">
               Create new board
@@ -445,7 +462,13 @@ export default function DashboardPage() {
             </p>
           </DialogHeader>
 
-          <div className="space-y-4">
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleCreateBoard();
+            }}
+          >
             <div className="space-y-2">
               <Label className="text-purple-700">Title</Label>
               <Input
@@ -505,6 +528,7 @@ export default function DashboardPage() {
 
             <div className="flex flex-col sm:flex-row justify-between pt-4 gap-2">
               <Button
+                type="button"
                 variant="ghost"
                 onClick={() => setIsCreateOpen(false)}
                 className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
@@ -512,14 +536,14 @@ export default function DashboardPage() {
                 Cancel
               </Button>
               <Button
+                type="submit"
                 className="bg-purple-500 hover:bg-purple-600"
-                onClick={handleCreateBoard}
                 disabled={!newBoard.title.trim()}
               >
                 Create board
               </Button>
             </div>
-          </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

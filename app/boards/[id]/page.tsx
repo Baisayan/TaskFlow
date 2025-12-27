@@ -77,7 +77,7 @@ function DroppableColumn({
         <div className="p-4 border-b border-purple-300 shadow-sm shadow-purple-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 min-w-0">
-              <h3 className="font-semibold text-purple-600 text-sm sm:text-base truncate">
+              <h3 className="font-semibold text-purple-700 text-base sm:text-lg truncate">
                 {column.title}
               </h3>
               <Badge
@@ -527,13 +527,13 @@ export default function BoardPage() {
         />
 
         <Dialog open={isEditingTitle} onOpenChange={setIsEditingTitle}>
-          <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
+          <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
             <DialogHeader>
-              <DialogTitle className="text-purple-600">Edit Board</DialogTitle>
+              <DialogTitle className="text-purple-700">Edit Board</DialogTitle>
             </DialogHeader>
             <form className="space-y-4" onSubmit={handleUpdateBoard}>
               <div className="space-y-2">
-                <Label htmlFor="boardTitle">Board Title</Label>
+                <Label htmlFor="boardTitle">Title</Label>
                 <Input
                   id="boardTitle"
                   value={newTitle}
