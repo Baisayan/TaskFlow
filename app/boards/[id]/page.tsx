@@ -585,16 +585,17 @@ export default function BoardPage() {
       </div>
 
       <Dialog open={isEditingTitle} onOpenChange={setIsEditingTitle}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[90vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
           <DialogHeader>
             <DialogTitle className="text-purple-700">Edit Board</DialogTitle>
+            <p className="text-sm text-purple-600">
+              Change the current board title.
+            </p>
           </DialogHeader>
 
           <form className="space-y-4" onSubmit={handleUpdateBoard}>
             <div className="space-y-2">
-              <Label htmlFor="boardTitle" className="text-purple-700">
-                Title
-              </Label>
+              <Label className="text-purple-600">Board Title</Label>
               <Input
                 id="boardTitle"
                 value={newTitle}
@@ -626,16 +627,17 @@ export default function BoardPage() {
       </Dialog>
 
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
           <DialogHeader>
-            <DialogTitle>Filter Tasks</DialogTitle>
-            <p className="text-sm text-gray-600">
+            <DialogTitle className="text-purple-700">Filter Tasks</DialogTitle>
+            <p className="text-sm text-purple-600">
               Filter tasks by priority or due date
             </p>
           </DialogHeader>
+
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Priority</Label>
+              <Label className="text-purple-600">Priority</Label>
               <div className="flex flex-wrap gap-2">
                 {["low", "medium", "high"].map((priority, key) => (
                   <Button
@@ -661,21 +663,31 @@ export default function BoardPage() {
             </div>
 
             <div className="space-y-2">
-              <Label>Due Date</Label>
+              <Label className="text-purple-600">Due Date</Label>
               <Input
                 type="date"
                 value={filters.dueDate || ""}
+                className="border-purple-300 bg-white text-purple-600 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   handleFilterChange("dueDate", e.target.value || null)
                 }
               />
             </div>
 
-            <div className="flex justify-between pt-4">
-              <Button type="button" variant={"outline"} onClick={clearFilters}>
+            <div className="flex flex-col sm:flex-row justify-end pt-4 gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
+                onClick={clearFilters}
+              >
                 Clear Filters
               </Button>
-              <Button type="button" onClick={() => setIsFilterOpen(false)}>
+              <Button
+                type="button"
+                className="bg-purple-500 hover:bg-purple-600"
+                onClick={() => setIsFilterOpen(false)}
+              >
                 Apply Filters
               </Button>
             </div>
@@ -684,58 +696,71 @@ export default function BoardPage() {
       </Dialog>
 
       <Dialog open={isCreatingColumn} onOpenChange={setIsCreatingColumn}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
           <DialogHeader>
-            <DialogTitle>Create New Column</DialogTitle>
-            <p className="text-sm text-gray-600">
+            <DialogTitle className="text-purple-700">
+              Create New Column
+            </DialogTitle>
+            <p className="text-sm text-purple-600">
               Add new column to organize your tasks
             </p>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleCreateColumn}>
             <div className="space-y-2">
-              <Label>Column Title</Label>
+              <Label className="text-purple-600">Column Title</Label>
               <Input
                 id="columnTitle"
                 value={newColumnTitle}
+                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) => setNewColumnTitle(e.target.value)}
                 placeholder="Enter column title..."
                 required
               />
             </div>
-            <div className="space-x-2 flex justify-end">
+
+            <div className="flex flex-col sm:flex-row justify-end pt-4 gap-2">
               <Button
                 type="button"
                 onClick={() => setIsCreatingColumn(false)}
-                variant="outline"
+                variant="ghost"
+                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
               >
                 Cancel
               </Button>
-              <Button type="submit">Create Column</Button>
+              <Button
+                type="submit"
+                className="bg-purple-500 hover:bg-purple-600"
+              >
+                Create Column
+              </Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isEditingColumn} onOpenChange={setIsEditingColumn}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
           <DialogHeader>
-            <DialogTitle>Edit Column</DialogTitle>
-            <p className="text-sm text-gray-600">
+            <DialogTitle className="text-purple-700">Edit Column</DialogTitle>
+            <p className="text-sm text-purple-600">
               Update the title of your column
             </p>
           </DialogHeader>
+
           <form className="space-y-4" onSubmit={handleUpdateColumn}>
             <div className="space-y-2">
-              <Label>Column Title</Label>
+              <Label className="text-purple-600">Column Title</Label>
               <Input
                 id="columnTitle"
                 value={editingColumnTitle}
                 onChange={(e) => setEditingColumnTitle(e.target.value)}
+                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 placeholder="Enter column title..."
                 required
               />
             </div>
-            <div className="space-x-2 flex justify-end">
+
+            <div className="flex flex-col sm:flex-row justify-end pt-4 gap-2">
               <Button
                 type="button"
                 onClick={() => {
@@ -743,11 +768,17 @@ export default function BoardPage() {
                   setEditingColumnTitle("");
                   setEditingColumn(null);
                 }}
-                variant="outline"
+                variant="ghost"
+                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
               >
                 Cancel
               </Button>
-              <Button type="submit">Edit Column</Button>
+              <Button
+                type="submit"
+                className="bg-purple-500 hover:bg-purple-600"
+              >
+                Edit Column
+              </Button>
             </div>
           </form>
         </DialogContent>
