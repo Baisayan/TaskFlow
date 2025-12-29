@@ -6,8 +6,6 @@ A modern Kanban-style task management application focused on speed, clarity, and
 |------------------------|------------------------|
 | ![](screenshots/3.png) | ![](screenshots/4.png) |
 
-## Live Demo & Links
-
 🔗 Live Demo: https://taskflow46.vercel.app 
 
 ## Features
