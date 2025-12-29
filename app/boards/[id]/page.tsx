@@ -21,7 +21,7 @@ import {
   DragOverEvent,
   DragOverlay,
   DragStartEvent,
-  PointerSensor,
+  MouseSensor,
   TouchSensor,
   rectIntersection,
   useSensor,
@@ -72,14 +72,14 @@ export default function BoardPage() {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(MouseSensor, {
       activationConstraint: {
         distance: 12,
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 750,
+        delay: 500,
         tolerance: 10,
       },
     })
