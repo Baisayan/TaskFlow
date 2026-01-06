@@ -44,7 +44,7 @@ export default function Navbar({
             </span>
           </div>
 
-          <div className="flex items-center space-x-2 sm:space-x-4 rounded-full border-2 border-purple-500">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <UserButton />
           </div>
         </div>
