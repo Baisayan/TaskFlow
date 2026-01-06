@@ -1,12 +1,7 @@
 "use client";
 
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Filter,
-  MoreHorizontal,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Filter, MoreHorizontal } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -55,44 +50,38 @@ export default function Navbar({
   if (isBoardPage) {
     return (
       <header className="border-b border-purple-300 bg-white/70 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4 min-w-0">
-              <Link
-                href="/dashboard"
-                className="flex items-center space-x-2 text-purple-700 hover:text-gray-900 shrink-0"
-              >
-                <Button
-                  size="sm"
-                  className="text-sm bg-purple-500 hover:bg-purple-600"
-                >
-                  <ArrowLeft />
+        <div className="container mx-auto px-2 sm:px-4 py-3">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4">
+            <div className="flex items-center">
+              <Link href="/dashboard">
+                <Button size="sm" className="bg-purple-500 hover:bg-purple-600">
+                  <ArrowLeft className="h-4 w-4" />
                   <span className="hidden sm:inline">Back to Dashboard</span>
                   <span className="sm:hidden">Back</span>
                 </Button>
               </Link>
-              <div className="self-stretch w-px bg-gray-300" />
-              <div className="flex items-center space-x-2 min-w-0">
-                <Logo className="h-6 w-6 text-purple-500" />
-                <div className="flex items-center space-x-1 min-w-0">
-                  <span className="text-lg font-bold text-gray-900 truncate">
-                    {boardTitle}
-                  </span>
-                  {onEditBoard && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 w-7 shrink-0 hover:bg-purple-100"
-                      onClick={onEditBoard}
-                    >
-                      <MoreHorizontal className="text-purple-600" />
-                    </Button>
-                  )}
-                </div>
-              </div>
             </div>
 
-            <div className="flex items-center space-x-4 shrink-0">
+            <div className="flex items-center justify-center gap-2 min-w-0">
+              <Logo className="h-5 w-5 text-purple-500 shrink-0" />
+
+              <span className="text-base sm:text-lg font-bold text-gray-900 truncate max-w-full">
+                {boardTitle}
+              </span>
+
+              {onEditBoard && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 w-7 shrink-0 hover:bg-purple-100"
+                  onClick={onEditBoard}
+                >
+                  <MoreHorizontal className="h-4 w-4 text-purple-600" />
+                </Button>
+              )}
+            </div>
+
+            <div className="flex items-center justify-end">
               {onFilterClick && (
                 <Button
                   variant="ghost"
@@ -102,12 +91,12 @@ export default function Navbar({
                   }`}
                   onClick={onFilterClick}
                 >
-                  <Filter className="mr-1 sm:mr-2" />
+                  <Filter className="h-4 w-4 mr-1 sm:mr-2" />
                   <span className="hidden sm:inline">Filter</span>
                   {filterCount > 0 && (
                     <Badge
                       variant="secondary"
-                      className="text-xs ml-1 bg-purple-50 border-purple-500"
+                      className="ml-1 text-xs bg-purple-50 border-purple-500"
                     >
                       {filterCount}
                     </Badge>
