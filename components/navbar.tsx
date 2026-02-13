@@ -30,7 +30,7 @@ export default function Navbar({
 
   if (isDashboardPage) {
     return (
-      <header className="border-b border-purple-300 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Logo className="size-6 sm:size-8 text-purple-500" />
@@ -111,42 +111,42 @@ export default function Navbar({
   }
 
   return (
-    <header className="border-b border-purple-300 bg-white/70 backdrop-blur-sm sticky top-0 z-50">
+    <header className="border-b backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-6 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Logo className="w-6 h-6 sm:h-8 sm:w-8 text-purple-500" />
-          <span className="text-xl sm:text-2xl font-bold text-gray-900">
+          <Logo className="size-6 sm:size-8 text-purple-500" />
+          <span className="text-xl sm:text-2xl font-bold">
             Task<span className="text-purple-500">Flow</span>
           </span>
         </div>
 
-        <div className="flex items-center space-x-2 sm:space-x-4">
+        <div className="flex items-center">
           {isSignedIn ? (
-            <div className="flex flex-col sm:flex-row items-end sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
-              <span className="text-xs sm:text-sm text-purple-700 hidden sm:block">
+            <div className="flex flex-row items-center space-x-4">
+              <span className="text-purple-700 hidden sm:block">
                 Welcome, {user.firstName ?? user.emailAddresses[0].emailAddress}
               </span>
               <Link href="/dashboard">
                 <Button
                   size="sm"
-                  className="text-xs sm:text-sm bg-purple-500 hover:bg-purple-600"
+                  className="text-sm"
                 >
                   Go to Dashboard <ArrowRight />
                 </Button>
               </Link>
             </div>
           ) : (
-            <div className="space-x-1">
+            <div className="space-x-2">
               <SignInButton>
                 <Button
                   variant="outline"
-                  className="text-xs sm:text-sm border-2 border-purple-500 text-purple-500 hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
+                  className="text-xs sm:text-sm"
                 >
                   Sign In
                 </Button>
               </SignInButton>
               <SignUpButton>
-                <Button className="text-xs sm:text-sm bg-purple-500 hover:bg-purple-600">
+                <Button className="text-xs sm:text-sm">
                   Sign Up
                 </Button>
               </SignUpButton>
