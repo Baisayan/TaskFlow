@@ -85,21 +85,21 @@ export default function HomePage() {
   
 
   return (
-    <div className="min-h-screen bg-radial from-white to-purple-50">
+    <div className="min-h-screen">
       <Navbar />
 
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-5xl mx-auto">
-          <div className="mx-auto mb-4 w-fit flex items-center border border-purple-700 shadow-sm p-4 bg-purple-100 text-purple-700 rounded-full font-bold uppercase">
-            <Medal className="h-6 w-6 mr-2" />
-            built for speed, focus, & clarity
+          <div className="mx-auto mb-4 w-fit flex items-center border shadow-sm p-4 rounded-full font-bold uppercase gap-2">
+            <Medal className="size-6" />
+            built for management & clarity
           </div>
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-5xl font-bold mb-6">
             Modern Way to Stay{" "}
-            <span className="text-purple-500">Organized</span> - Task
-            <span className="text-purple-500">Flow</span>
+            <span className="text-primary">Organized</span> - Task
+            <span className="text-primary">Flow</span>
           </h1>
-          <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl mb-8 max-w-3xl mx-auto">
             Plan projects, organize tasks, track progress, and streamline your
             workflow with fast, flexible Kanban system. From daily planning to
             long-term goals, TaskFlow adapts to how you work, helps stay
@@ -112,7 +112,7 @@ export default function HomePage() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="text-lg border-2 border-purple-500 text-purple-500 hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
+                  className="text-lg"
                 >
                   Explore Features
                 </Button>
@@ -120,7 +120,7 @@ export default function HomePage() {
               <SignUpButton>
                 <Button
                   size="lg"
-                  className="text-lg px-8 bg-purple-500 hover:bg-purple-600"
+                  className="text-lg px-8"
                 >
                   Start for free
                   <ArrowRight className="ml-2 h-5 w-5" />

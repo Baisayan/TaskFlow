@@ -6,8 +6,6 @@ import SupabaseProvider from "@/lib/supabase/SupabaseProvider";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -26,13 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${inter.variable} antialiased`}
-        >
-          <SupabaseProvider>
-            {children}
-          </SupabaseProvider>
+      <html lang="en" suppressHydrationWarning className="dark">
+        <body className={`${inter.className} antialiased`}>
+          <SupabaseProvider>{children}</SupabaseProvider>
         </body>
       </html>
     </ClerkProvider>

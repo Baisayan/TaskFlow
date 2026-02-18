@@ -140,13 +140,13 @@ export default function Navbar({
               <SignInButton>
                 <Button
                   variant="outline"
-                  className="text-xs sm:text-sm"
+                  className="text-sm border-2 text-purple-500"
                 >
                   Sign In
                 </Button>
               </SignInButton>
               <SignUpButton>
-                <Button className="text-xs sm:text-sm">
+                <Button className="text-sm">
                   Sign Up
                 </Button>
               </SignUpButton>
