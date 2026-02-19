@@ -312,9 +312,7 @@ export default function DashboardPage() {
                       setEditBoard((prev) => ({ ...prev, color: c }))
                     }
                     className={`size-8 rounded-full ${c} ${
-                      editBoard.color === c
-                        ? "ring-3"
-                        : ""
+                      editBoard.color === c ? "ring-3" : ""
                     }`}
                   />
                 ))}
@@ -346,10 +344,10 @@ export default function DashboardPage() {
       </Dialog>
 
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 [&>button]:rounded-md">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">Filter Boards</DialogTitle>
-            <p className="text-sm text-purple-600">
+            <DialogTitle>Filter Boards</DialogTitle>
+            <p className="text-sm text-muted-foreground">
               Filter boards by title or last updated date.
             </p>
           </DialogHeader>
@@ -362,10 +360,9 @@ export default function DashboardPage() {
             }}
           >
             <div className="space-y-2">
-              <Label className="text-purple-700">Search</Label>
+              <Label>Search</Label>
               <Input
                 placeholder="Search board titles..."
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   setFilters((prev) => ({ ...prev, search: e.target.value }))
                 }
@@ -373,15 +370,12 @@ export default function DashboardPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-700 pb-1">Date Range</Label>
+              <Label>Date Range</Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div className="space-y-1">
-                  <Label className="text-xs text-purple-700 pl-1">
-                    Start Date
-                  </Label>
+                  <Label className="text-xs pl-1">Start Date</Label>
                   <Input
                     type="date"
-                    className="border-purple-300 bg-white text-purple-600 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -395,12 +389,9 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <Label className="text-xs text-purple-700 pl-1">
-                    End Date
-                  </Label>
+                  <Label className="text-xs pl-1">End Date</Label>
                   <Input
                     type="date"
-                    className="border-purple-300 bg-white text-purple-600 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -416,32 +407,20 @@ export default function DashboardPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-end gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
-                onClick={clearFilters}
-              >
+              <Button type="button" variant="outline" onClick={clearFilters}>
                 Clear Filters
               </Button>
-              <Button
-                type="submit"
-                className="bg-purple-500 hover:bg-purple-600"
-              >
-                Apply Filters
-              </Button>
+              <Button type="submit">Apply Filters</Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 [&>button]:rounded-md">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">
-              Create new board
-            </DialogTitle>
-            <p className="text-sm text-purple-600">
+            <DialogTitle>Create new board</DialogTitle>
+            <p className="text-sm text-muted-foreground">
               Create a new board to manage your tasks.
             </p>
           </DialogHeader>
@@ -454,11 +433,10 @@ export default function DashboardPage() {
             }}
           >
             <div className="space-y-2">
-              <Label className="text-purple-700">Title</Label>
+              <Label>Title</Label>
               <Input
                 placeholder="e.g. First Project"
                 value={newBoard.title}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   setNewBoard((prev) => ({
                     ...prev,
@@ -469,11 +447,10 @@ export default function DashboardPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-700">Description</Label>
+              <Label>Description</Label>
               <Input
                 placeholder="Optional"
                 value={newBoard.description}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   setNewBoard((prev) => ({
                     ...prev,
@@ -484,7 +461,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-700">Color</Label>
+              <Label>Color</Label>
               <div className="grid grid-cols-4 gap-2 justify-items-center">
                 {[
                   "bg-blue-500",
@@ -500,10 +477,8 @@ export default function DashboardPage() {
                     type="button"
                     key={color}
                     onClick={() => setNewBoard((prev) => ({ ...prev, color }))}
-                    className={`w-8 h-8 rounded-full ${color} ${
-                      newBoard.color === color
-                        ? "ring-2 ring-offset-2 ring-purple-600"
-                        : ""
+                    className={`size-8 rounded-full ${color} ${
+                      newBoard.color === color ? "ring-3" : ""
                     }`}
                   />
                 ))}
@@ -513,17 +488,12 @@ export default function DashboardPage() {
             <div className="flex flex-col sm:flex-row justify-end gap-2">
               <Button
                 type="button"
-                variant="ghost"
+                variant="outline"
                 onClick={() => setIsCreateOpen(false)}
-                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                className="bg-purple-500 hover:bg-purple-600"
-                disabled={!newBoard.title.trim()}
-              >
+              <Button type="submit" disabled={!newBoard.title.trim()}>
                 Create board
               </Button>
             </div>
