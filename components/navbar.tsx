@@ -120,7 +120,7 @@ export default function Navbar({
         <div className="flex items-center">
           {isSignedIn ? (
             <div className="flex flex-row items-center space-x-4">
-              <span className="text-primary hidden sm:block">
+              <span className="hidden sm:block">
                 Welcome, {user.firstName ?? user.emailAddresses[0].emailAddress}
               </span>
               <Link href="/dashboard">

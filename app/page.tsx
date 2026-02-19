@@ -94,21 +94,14 @@ export default function HomePage() {
           ) : (
             <div className="flex flex-row gap-4 justify-center">
               <a href="#features">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="text-lg border-2 border-purple-500 text-purple-500 hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
-                >
+                <Button variant="outline" size="lg" className="text-lg">
                   Explore Features
                 </Button>
               </a>
               <Link href="/dashboard">
-                <Button
-                  size="lg"
-                  className="text-lg px-8 bg-purple-500 hover:bg-purple-600"
-                >
+                <Button size="lg" className="text-lg">
                   Go to DashBoard
-                  <ArrowRight className="ml-2 size-5" />
+                  <ArrowRight className="size-5" />
                 </Button>
               </Link>
             </div>
@@ -128,15 +121,12 @@ export default function HomePage() {
 
         <div className="grid grid-cols-2 mx-auto max-w-4xl gap-6">
           {features.map((feature, index) => (
-            <Card
-              key={index}
-              className="gap-4"
-            >
+            <Card key={index} className="gap-4">
               <CardHeader className="text-center">
                 <div className="mx-auto size-16 bg-secondary rounded-lg flex items-center justify-center mb-2">
                   <feature.icon className="size-8 text-primary" />
                 </div>
-                <CardTitle className="text-lg font-bold text-primary">
+                <CardTitle className="text-lg font-semibold">
                   {feature.title}
                 </CardTitle>
               </CardHeader>
