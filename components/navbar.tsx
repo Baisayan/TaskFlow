@@ -33,9 +33,9 @@ export default function Navbar({
       <header className="border-b backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Logo className="size-6 sm:size-8 text-purple-500" />
+            <Logo className="size-6 sm:size-8 text-primary" />
             <span className="text-xl sm:text-2xl font-bold">
-              Task<span className="text-purple-500">Flow</span>
+              Task<span className="text-primary">Flow</span>
             </span>
           </div>
 
@@ -114,16 +114,16 @@ export default function Navbar({
     <header className="border-b backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-6 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Logo className="size-6 sm:size-8 text-purple-500" />
+          <Logo className="size-6 sm:size-8 text-primary" />
           <span className="text-xl sm:text-2xl font-bold">
-            Task<span className="text-purple-500">Flow</span>
+            Task<span className="text-primary">Flow</span>
           </span>
         </div>
 
         <div className="flex items-center">
           {isSignedIn ? (
             <div className="flex flex-row items-center space-x-4">
-              <span className="text-purple-700 hidden sm:block">
+              <span className="text-primary hidden sm:block">
                 Welcome, {user.firstName ?? user.emailAddresses[0].emailAddress}
               </span>
               <Link href="/dashboard">
@@ -140,7 +140,7 @@ export default function Navbar({
               <SignInButton>
                 <Button
                   variant="outline"
-                  className="text-sm border-2 text-purple-500"
+                  className="text-sm"
                 >
                   Sign In
                 </Button>

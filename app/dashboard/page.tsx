@@ -26,7 +26,8 @@ import { useState, useMemo } from "react";
 
 export default function DashboardPage() {
   const { user } = useUser();
-  const { createBoard, updateBoard, deleteBoard, boards, loading, error } = useBoards();
+  const { createBoard, updateBoard, deleteBoard, boards, loading, error } =
+    useBoards();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [activeBoard, setActiveBoard] = useState<Board | null>(null);
@@ -136,10 +137,8 @@ export default function DashboardPage() {
 
   if (loading && boards.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-purple-50">
-        <div className="text-purple-600 text-xl font-medium">
-          Loading your dashboard...
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl font-medium">Loading your dashboard...</div>
       </div>
     );
   }
@@ -154,40 +153,34 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="bg-fixed min-h-screen bg-radial from-white to-purple-50">
+    <div className="min-h-screen">
       <Navbar />
 
       <main className="container mx-auto px-4 py-6">
         <div className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2">
                 Your workspace awaits,{" "}
-                <span className="text-purple-500">
+                <span className="text-primary">
                   {user?.firstName ?? user?.emailAddresses[0].emailAddress}!
                 </span>
               </h2>
-              <p className="text-purple-600 px-1">
+              <p className="text-muted-foreground px-1">
                 Manage your projects and tasks in one place.
               </p>
             </div>
 
-            {/* Filter and create board button */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="lg"
-                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
                 onClick={() => setIsFilterOpen(true)}
               >
                 <Filter /> Filter
               </Button>
 
-              <Button
-                onClick={() => setIsCreateOpen(true)}
-                size="lg"
-                className="bg-purple-500 hover:bg-purple-600"
-              >
+              <Button onClick={() => setIsCreateOpen(true)} size="lg">
                 <Plus strokeWidth={3} />
                 Create
               </Button>
@@ -195,11 +188,11 @@ export default function DashboardPage() {
           </div>
 
           <div className="relative mb-4 sm:mb-6">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-purple-500" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-primary" />
             <Input
               id="search"
               placeholder="Search boards..."
-              className="pl-10 border border-purple-300 bg-white text-purple-500 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
+              className="pl-10 border-2"
               onChange={(e) =>
                 setFilters((prev) => ({ ...prev, search: e.target.value }))
               }
@@ -207,41 +200,41 @@ export default function DashboardPage() {
           </div>
 
           {boards.length === 0 ? (
-            <div className="px-1 text-purple-600">No boards yet</div>
+            <div className="px-1">No boards yet</div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-fr">
               {filteredBoards.map((board) => (
                 <Link href={`/boards/${board.id}`} key={board.id}>
-                  <Card className="h-full hover:shadow-lg hover:shadow-purple-200 transition-shadow cursor-pointer group border-purple-300 hover:border-purple-400">
+                  <Card className="h-full">
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className={`w-4 h-4 ${board.color} rounded`} />
-                          <CardTitle className="text-lg sm:text-xl text-purple-600 truncate">
+                          <div className={`size-4 ${board.color} rounded`} />
+                          <CardTitle className="text-lg sm:text-xl truncate">
                             {board.title}
                           </CardTitle>
                         </div>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="shrink-0 rounded-full hover:bg-purple-100"
+                          className="shrink-0 rounded-full"
                           onClick={(e) => {
                             e.preventDefault();
                             handleOpenEditDialog(board);
                           }}
                         >
-                          <MoreVertical className="text-purple-600" />
+                          <MoreVertical />
                         </Button>
                       </div>
                     </CardHeader>
 
                     <CardContent className="p-4 sm:p-6">
-                      <CardDescription className="text-md mb-3 line-clamp-2 min-h-12">
+                      <CardDescription className="text-md mb-3 line-clamp-2">
                         {board.description?.trim()
                           ? board.description
                           : "No description"}
                       </CardDescription>
-                      <div className="flex justify-end pr-3 text-sm text-gray-600">
+                      <div className="flex justify-end pr-3 text-muted-foreground">
                         Last Updated{" "}
                         {new Date(board.updated_at).toLocaleDateString()}
                       </div>
@@ -250,13 +243,10 @@ export default function DashboardPage() {
                 </Link>
               ))}
 
-              <Card
-                onClick={() => setIsCreateOpen(true)}
-                className="border border-purple-300 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-200 transition-colors cursor-pointer group"
-              >
-                <CardContent className="p-4 sm:p-6 flex flex-col items-center justify-center h-full">
-                  <Plus className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600 mb-2" />
-                  <p className="text-sm sm:text-base text-purple-600 font-medium">
+              <Card onClick={() => setIsCreateOpen(true)}>
+                <CardContent className="flex flex-col items-center justify-center h-full">
+                  <Plus className="size-6 sm:size-8 mb-2" />
+                  <p className="text-sm sm:text-base font-medium">
                     Create New Board
                   </p>
                 </CardContent>
@@ -267,10 +257,10 @@ export default function DashboardPage() {
       </main>
 
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 [&>button]:rounded-md">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">Edit board</DialogTitle>
-            <p className="text-sm text-purple-600">
+            <DialogTitle>Edit board</DialogTitle>
+            <p className="text-sm text-muted-foreground">
               Edit or delete your boards as per your needs.
             </p>
           </DialogHeader>
@@ -283,10 +273,9 @@ export default function DashboardPage() {
             }}
           >
             <div className="space-y-2">
-              <Label className="text-purple-700">Title</Label>
+              <Label>Title</Label>
               <Input
                 value={editBoard.title}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   setEditBoard((p) => ({ ...p, title: e.target.value }))
                 }
@@ -294,10 +283,9 @@ export default function DashboardPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-700">Description</Label>
+              <Label>Description</Label>
               <Input
                 value={editBoard.description}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   setEditBoard((p) => ({ ...p, description: e.target.value }))
                 }
@@ -305,7 +293,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-700">Color</Label>
+              <Label>Color</Label>
               <div className="grid grid-cols-4 gap-2 justify-items-center">
                 {[
                   "bg-blue-500",
@@ -323,9 +311,9 @@ export default function DashboardPage() {
                     onClick={() =>
                       setEditBoard((prev) => ({ ...prev, color: c }))
                     }
-                    className={`w-8 h-8 rounded-full ${c} ${
+                    className={`size-8 rounded-full ${c} ${
                       editBoard.color === c
-                        ? "ring-2 ring-offset-2 ring-purple-600"
+                        ? "ring-3"
                         : ""
                     }`}
                   />
@@ -347,16 +335,10 @@ export default function DashboardPage() {
                   variant="outline"
                   type="button"
                   onClick={() => setIsEditOpen(false)}
-                  className="border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  className="bg-purple-500 hover:bg-purple-600"
-                >
-                  Save Changes
-                </Button>
+                <Button type="submit">Save Changes</Button>
               </div>
             </div>
           </form>
