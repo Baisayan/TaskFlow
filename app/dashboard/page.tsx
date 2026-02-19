@@ -257,7 +257,7 @@ export default function DashboardPage() {
       </main>
 
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
             <DialogTitle>Edit board</DialogTitle>
             <p className="text-sm text-muted-foreground">
@@ -344,7 +344,7 @@ export default function DashboardPage() {
       </Dialog>
 
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
             <DialogTitle>Filter Boards</DialogTitle>
             <p className="text-sm text-muted-foreground">
@@ -417,7 +417,7 @@ export default function DashboardPage() {
       </Dialog>
 
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
             <DialogTitle>Create new board</DialogTitle>
             <p className="text-sm text-muted-foreground">

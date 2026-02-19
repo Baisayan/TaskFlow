@@ -38,7 +38,7 @@ export default function SortableTask({
       description?: string | null;
       priority?: "low" | "medium" | "high";
       dueDate?: string | null;
-    }
+    },
   ) => Promise<void>;
   onDeleteTask: (taskId: string) => Promise<void>;
 }) {
@@ -81,18 +81,12 @@ export default function SortableTask({
 
   return (
     <>
-      <div
-        ref={setNodeRef}
-        style={styles}
-        {...listeners}
-        {...attributes}
-      >
-        <Card className="cursor-pointer border-purple-300 hover:shadow-lg hover:shadow-purple-200 transition-shadow">
+      <div ref={setNodeRef} style={styles} {...listeners} {...attributes}>
+        <Card>
           <CardContent className="p-4">
             <div className="space-y-3">
-              {/* Task Header */}
-              <div className="flex items-start justify-between">
-                <h4 className="font-medium text-purple-600 text-sm flex-1 min-w-0 pr-2">
+              <div className="flex items-center justify-between">
+                <h4 className="font-medium text-sm flex-1 truncate pr-2">
                   {task.title}
                 </h4>
 
@@ -100,26 +94,27 @@ export default function SortableTask({
                   variant="ghost"
                   type="button"
                   size="icon"
-                  className="h-7 w-7"
                   onClick={(e) => {
                     e.stopPropagation();
                     openEdit();
                   }}
                 >
-                  <MoreVertical className="h-4 w-4 text-purple-500" />
+                  <MoreVertical className="size-4" />
                 </Button>
               </div>
 
               {task.description && (
-                <p className="text-xs text-gray-600">{task.description}</p>
+                <p className="text-xs text-muted-foreground">
+                  {task.description}
+                </p>
               )}
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
                   {task.due_date && (
-                    <div className="flex items-center space-x-1 text-xs text-gray-500">
+                    <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                       <Calendar
-                        className={`h-3 w-3 ${
+                        className={`size-3 ${
                           isOverdue ? "text-red-500 font-medium" : ""
                         }`}
                       />
@@ -134,7 +129,7 @@ export default function SortableTask({
                   )}
                 </div>
                 <div
-                  className={`w-3 h-3 mr-2 rounded-full shrink-0 ${
+                  className={`size-3 mr-2 rounded-full shrink-0 ${
                     PRIORITY_COLOR_MAP[task.priority]
                   }`}
                 />
@@ -145,9 +140,9 @@ export default function SortableTask({
       </div>
 
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">Edit Task</DialogTitle>
+            <DialogTitle>Edit Task</DialogTitle>
           </DialogHeader>
 
           <form
@@ -164,43 +159,37 @@ export default function SortableTask({
             }}
           >
             <div className="space-y-2">
-              <Label className="text-purple-600">Title</Label>
+              <Label>Title</Label>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-600">Description</Label>
+              <Label>Description</Label>
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 rows={3}
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-600">Priority</Label>
+              <Label>Priority</Label>
               <Select
                 value={priority}
                 onValueChange={(value) =>
                   setPriority(value as Task["priority"])
                 }
               >
-                <SelectTrigger className="border-purple-300 bg-white text-purple-600">
+                <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="border-purple-300 bg-white">
+                <SelectContent>
                   {["low", "medium", "high"].map((priority) => (
-                    <SelectItem
-                      key={priority}
-                      value={priority}
-                      className="text-purple-600 focus:bg-purple-100 focus:text-purple-700"
-                    >
+                    <SelectItem key={priority} value={priority}>
                       {priority}
                     </SelectItem>
                   ))}
@@ -209,12 +198,11 @@ export default function SortableTask({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-600">Due Date</Label>
+              <Label>Due Date</Label>
               <Input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="border-purple-300 bg-white text-purple-600 focus-visible:ring-purple-200 focus-visible:border-purple-300"
               />
             </div>
 
@@ -234,17 +222,11 @@ export default function SortableTask({
                 <Button
                   type="button"
                   variant="outline"
-                  className="border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
                   onClick={() => setIsEditOpen(false)}
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  className="bg-purple-500 hover:bg-purple-600"
-                >
-                  Save Changes
-                </Button>
+                <Button type="submit">Save Changes</Button>
               </div>
             </div>
           </form>

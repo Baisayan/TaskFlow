@@ -61,7 +61,7 @@ export default function BoardPage() {
   const [newColumnTitle, setNewColumnTitle] = useState("");
   const [editingColumnTitle, setEditingColumnTitle] = useState("");
   const [editingColumn, setEditingColumn] = useState<ColumnWithTasks | null>(
-    null
+    null,
   );
 
   const [filters, setFilters] = useState({
@@ -82,12 +82,12 @@ export default function BoardPage() {
         delay: 300,
         tolerance: 5,
       },
-    })
+    }),
   );
 
   function handleFilterChange(
     type: "priority" | "dueDate",
-    value: string | string[] | null
+    value: string | string[] | null,
   ) {
     setFilters((prev) => ({
       ...prev,
@@ -117,7 +117,7 @@ export default function BoardPage() {
 
   async function handleCreateTask(
     columnId: string,
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -140,14 +140,14 @@ export default function BoardPage() {
       description?: string | null;
       priority?: "low" | "medium" | "high";
       dueDate?: string | null;
-    }
+    },
   ) {
     await updateTask(taskId, updates);
   }
 
   async function handleDeleteTask(taskId: string) {
     await deleteTask(taskId);
-  }  
+  }
 
   function handleDragStart(event: DragStartEvent) {
     const taskId = event.active.id as string;
@@ -168,18 +168,18 @@ export default function BoardPage() {
     const overId = over.id as string;
 
     const sourceColumn = columns.find((col) =>
-      col.tasks.some((task) => task.id === activeId)
+      col.tasks.some((task) => task.id === activeId),
     );
 
     const targetColumn = columns.find((col) =>
-      col.tasks.some((task) => task.id === overId)
+      col.tasks.some((task) => task.id === overId),
     );
 
     if (!sourceColumn || !targetColumn) return;
     if (sourceColumn.id !== targetColumn.id) return;
 
     const fromIndex = sourceColumn.tasks.findIndex(
-      (task) => task.id === activeId
+      (task) => task.id === activeId,
     );
 
     const toIndex = targetColumn.tasks.findIndex((task) => task.id === overId);
@@ -197,7 +197,7 @@ export default function BoardPage() {
 
     // Source column
     const sourceColumn = columns.find((col) =>
-      col.tasks.some((task) => task.id === taskId)
+      col.tasks.some((task) => task.id === taskId),
     );
     if (!sourceColumn) return;
 
@@ -207,14 +207,14 @@ export default function BoardPage() {
       await moveTask(
         taskId,
         targetColumnById.id,
-        targetColumnById.tasks.length
+        targetColumnById.tasks.length,
       );
       return;
     }
 
     // Dropped on task
     const targetColumn = columns.find((col) =>
-      col.tasks.some((task) => task.id === overId)
+      col.tasks.some((task) => task.id === overId),
     );
 
     if (!targetColumn) return;
@@ -280,7 +280,7 @@ export default function BoardPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-fixed bg-radial from-white to-purple-50">
+      <div className="min-h-screen">
         <Navbar
           boardTitle={board?.title}
           onEditBoard={() => {
@@ -291,24 +291,22 @@ export default function BoardPage() {
           filterCount={Object.values(filters).reduce(
             (count, v) =>
               count + (Array.isArray(v) ? v.length : v !== null ? 1 : 0),
-            0
+            0,
           )}
         />
 
-        {/* Board Content */}
         <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
           <div className="flex flex-row items-center justify-between mb-6">
             <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-              <div className="text-sm text-purple-600">
+              <div className="text-sm">
                 <span className="font-medium">Total Tasks: </span>
                 {columns.reduce((sum, col) => sum + col.tasks.length, 0)}
               </div>
             </div>
 
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
-              className="border-2 bg-white border-purple-500 text-purple-500 hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
               onClick={() => setIsCreatingColumn(true)}
             >
               <Plus />
@@ -316,7 +314,6 @@ export default function BoardPage() {
             </Button>
           </div>
 
-          {/* Columns */}
           <DndContext
             sensors={sensors}
             collisionDetection={rectIntersection}
@@ -325,8 +322,7 @@ export default function BoardPage() {
             onDragEnd={handleDragEnd}
           >
             <div
-              className="flex flex-col gap-4 md:gap-6 md:items-center lg:items-start lg:flex-row lg:gap-6 lg:overflow-x-auto lg:pb-6 lg:px-2 lg:-mx-2 
-              lg:[&::-webkit-scrollbar]:h-2 lg:[&::-webkit-scrollbar-track]:bg-white lg:[&::-webkit-scrollbar-thumb]:bg-purple-300 lg:[&::-webkit-scrollbar-thumb]:rounded-full"
+              className="flex flex-col gap-4 md:gap-6 md:items-center lg:items-start lg:flex-row lg:gap-6 lg:overflow-x-auto lg:pb-4 lg:[&::-webkit-scrollbar]:h-2 lg:[&::-webkit-scrollbar-thumb]:bg-primary lg:[&::-webkit-scrollbar-thumb]:rounded-full"
             >
               {filteredColumns.map((column) => (
                 <DroppableColumn
@@ -362,21 +358,20 @@ export default function BoardPage() {
       </div>
 
       <Dialog open={isEditingTitle} onOpenChange={setIsEditingTitle}>
-        <DialogContent className="w-[90vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[90vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">Edit Board</DialogTitle>
-            <p className="text-sm text-purple-600">
+            <DialogTitle>Edit Board</DialogTitle>
+            <p className="text-sm text-muted-foreground">
               Change the current board title.
             </p>
           </DialogHeader>
 
           <form className="space-y-4" onSubmit={handleUpdateBoard}>
             <div className="space-y-2">
-              <Label className="text-purple-600">Board Title</Label>
+              <Label>Board Title</Label>
               <Input
                 id="boardTitle"
                 value={newTitle}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) => setNewTitle(e.target.value)}
                 placeholder="Enter board title..."
                 required
@@ -386,28 +381,22 @@ export default function BoardPage() {
             <div className="flex flex-col sm:flex-row justify-end gap-2">
               <Button
                 type="button"
-                variant="ghost"
-                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
+                variant="outline"
                 onClick={() => setIsEditingTitle(false)}
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                className="bg-purple-500 hover:bg-purple-600"
-              >
-                Save Changes
-              </Button>
+              <Button type="submit">Save Changes</Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">Filter Tasks</DialogTitle>
-            <p className="text-sm text-purple-600">
+            <DialogTitle>Filter Tasks</DialogTitle>
+            <p className="text-sm text-muted-foreground">
               Filter tasks by priority or due date
             </p>
           </DialogHeader>
@@ -420,7 +409,7 @@ export default function BoardPage() {
             }}
           >
             <div className="space-y-3">
-              <Label className="text-purple-600">Priority</Label>
+              <Label>Priority</Label>
               <div className="flex flex-wrap gap-2">
                 {(["low", "medium", "high"] as const).map((priority) => {
                   const isActive = filters.priority.includes(priority);
@@ -430,17 +419,12 @@ export default function BoardPage() {
                       type="button"
                       size="sm"
                       variant={isActive ? "default" : "outline"}
-                      className={
-                        isActive
-                          ? "bg-purple-500 hover:bg-purple-600"
-                          : "border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
-                      }
                       onClick={() =>
                         handleFilterChange(
                           "priority",
                           isActive
                             ? filters.priority.filter((p) => p !== priority)
-                            : [...filters.priority, priority]
+                            : [...filters.priority, priority],
                         )
                       }
                     >
@@ -452,11 +436,10 @@ export default function BoardPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-purple-600">Due Date</Label>
+              <Label>Due Date</Label>
               <Input
                 type="date"
                 value={filters.dueDate || ""}
-                className="border-purple-300 bg-white text-purple-600 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) =>
                   handleFilterChange("dueDate", e.target.value || null)
                 }
@@ -464,42 +447,29 @@ export default function BoardPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-end gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
-                onClick={clearFilters}
-              >
+              <Button type="button" variant="outline" onClick={clearFilters}>
                 Clear Filters
               </Button>
-              <Button
-                type="submit"
-                className="bg-purple-500 hover:bg-purple-600"
-              >
-                Apply Filters
-              </Button>
+              <Button type="submit">Apply Filters</Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isCreatingColumn} onOpenChange={setIsCreatingColumn}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">
-              Create New Column
-            </DialogTitle>
-            <p className="text-sm text-purple-600">
+            <DialogTitle>Create New Column</DialogTitle>
+            <p className="text-sm text-muted-foreground">
               Add new column to organize your tasks
             </p>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleCreateColumn}>
             <div className="space-y-2">
-              <Label className="text-purple-600">Column Title</Label>
+              <Label>Column Title</Label>
               <Input
                 id="columnTitle"
                 value={newColumnTitle}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 onChange={(e) => setNewColumnTitle(e.target.value)}
                 placeholder="Enter column title..."
                 required
@@ -510,39 +480,32 @@ export default function BoardPage() {
               <Button
                 type="button"
                 onClick={() => setIsCreatingColumn(false)}
-                variant="ghost"
-                className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
+                variant="outline"
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                className="bg-purple-500 hover:bg-purple-600"
-              >
-                Create Column
-              </Button>
+              <Button type="submit">Create Column</Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isEditingColumn} onOpenChange={setIsEditingColumn}>
-        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2 border-purple-300 bg-purple-50 [&>button]:rounded-md">
+        <DialogContent className="w-[95vw] max-w-[425px] mx-auto border-2">
           <DialogHeader>
-            <DialogTitle className="text-purple-700">Edit Column</DialogTitle>
-            <p className="text-sm text-purple-600">
+            <DialogTitle>Edit Column</DialogTitle>
+            <p className="text-sm text-muted-foreground">
               Update the title of your column
             </p>
           </DialogHeader>
 
           <form className="space-y-4" onSubmit={handleUpdateColumn}>
             <div className="space-y-2">
-              <Label className="text-purple-600">Column Title</Label>
+              <Label>Column Title</Label>
               <Input
                 id="columnTitle"
                 value={editingColumnTitle}
                 onChange={(e) => setEditingColumnTitle(e.target.value)}
-                className="border-purple-300 bg-white text-purple-600 placeholder:text-purple-500 focus-visible:ring-purple-200 focus-visible:border-purple-300"
                 placeholder="Enter column title..."
                 required
               />
@@ -565,17 +528,11 @@ export default function BoardPage() {
                     setEditingColumnTitle("");
                     setEditingColumn(null);
                   }}
-                  variant="ghost"
-                  className="border border-purple-300 text-purple-500 bg-white hover:bg-purple-100 hover:border-purple-600 hover:text-purple-600"
+                  variant="outline"
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  className="bg-purple-500 hover:bg-purple-600"
-                >
-                  Edit Column
-                </Button>
+                <Button type="submit">Edit Column</Button>
               </div>
             </div>
           </form>

@@ -13,28 +13,25 @@ export default function TaskOverlay({ task }: { task: Task }) {
   const isOverdue = task.due_date && new Date(task.due_date) < new Date();
 
   return (
-    <Card className="cursor-pointer border-purple-300 hover:shadow-lg hover:shadow-purple-200 transition-shadow">
+    <Card>
       <CardContent className="p-4">
         <div className="space-y-3">
-          {/* Task Header */}
-          <div className="flex items-start justify-between">
-            <h4 className="font-medium text-purple-600 text-sm leading-tight flex-1 min-w-0 pr-2">
+          <div className="flex items-center justify-between">
+            <h4 className="font-medium text-sm flex-1 truncate pr-2">
               {task.title}
             </h4>
           </div>
 
-          {/* Task Description */}
           {task.description && (
-            <p className="text-xs text-gray-600">{task.description}</p>
+            <p className="text-xs text-muted-foreground">{task.description}</p>
           )}
 
-          {/* Task Meta */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
               {task.due_date && (
-                <div className="flex items-center space-x-1 text-xs text-gray-500">
+                <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                   <Calendar
-                    className={`h-3 w-3 ${
+                    className={`size-3 ${
                       isOverdue ? "text-red-500 font-medium" : ""
                     }`}
                   />
@@ -49,7 +46,7 @@ export default function TaskOverlay({ task }: { task: Task }) {
               )}
             </div>
             <div
-              className={`w-3 h-3 mr-3 rounded-full shrink-0 ${
+              className={`size-3 mr-2 rounded-full shrink-0 ${
                 PRIORITY_COLOR_MAP[task.priority]
               }`}
             />
